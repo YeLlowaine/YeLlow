@@ -3,6 +3,7 @@ package routers
 import (
 	"github.com/Hallelujah1025/Stroke-Survivors/middleware/jwt"
 	"github.com/Hallelujah1025/Stroke-Survivors/routers/api"
+	im "github.com/Hallelujah1025/Stroke-Survivors/routers/api/im"
 	v1 "github.com/Hallelujah1025/Stroke-Survivors/routers/api/v1"
 	"github.com/gin-gonic/gin"
 
@@ -24,11 +25,26 @@ func InitRouter() *gin.Engine {
 	r.GET("/register", api.Register)
 	//登陆
 	r.GET("/auth", api.GetAuth)
+
+	//send message
+
+	r.GET("/getToken", im.GetToken)
+	r.GET("/userUpdate", im.UserUpdate)
+	r.GET("/onlineStatusCheck", im.OnlineStatusCheck)
+	r.GET("/privateSend", im.PrivateSend)
+	r.GET("/privateSendRecall", im.PrivateSendRecall)
+
 	//检查答案
 	r.GET("/checkAnswer", api.CheckAnswer)
 	// 修改密码
 	r.GET("/updateAuth", api.UpdateAuth)
-	//反馈
+	// 获取用户信息
+	r.GET("/getInfo/:id", api.GetInfo)
+	// 通过用户名获取用户信息
+	r.GET("/getInfoFromName/:username", api.GetInfoFromName)
+	// 通过用户名获取头像
+	r.GET("/getIcon/:username", api.GetIcon)
+
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(jwt.JWT())
 	{
