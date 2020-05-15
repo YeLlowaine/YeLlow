@@ -18,6 +18,12 @@ var (
 
 	PageSize  int
 	JwtSecret string
+
+	MaxIdle     int
+	MaxActive   int
+	IdleTimeout int
+	Host        int
+	Password    int
 )
 
 func init() {
@@ -56,4 +62,17 @@ func LoadApp() {
 	JwtSecret = sec.Key("JWT_SECRET").MustString("!@)*#)!@U#@*!@!)")
 	PageSize = sec.Key("PAGE_SIZE").MustInt(10)
 
+}
+
+func LoadRedis() {
+	sec, err := Cfg.GetSection("redis")
+	if err != nil {
+		log.Fatalf("Fail to get section 'redis': %v", err)
+	}
+
+	MaxIdle = sec.Key("MaxIdle").MustInt(10)
+	MaxActive = sec.Key("MaxActive").MustInt(10)
+	Host = sec.Key("Host").MustInt(10)
+	IdleTimeout = sec.Key("IdleTimeout").MustInt(10)
+	Password = sec.Key("Password").MustInt(10)
 }
