@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Hallelujah1025/Stroke-Survivors/models"
-	"github.com/Hallelujah1025/Stroke-Survivors/pkg/e"
-	"github.com/Hallelujah1025/Stroke-Survivors/pkg/logging"
+	"github.com/YeLlowaine/YeLlow/models"
+	"github.com/YeLlowaine/YeLlow/pkg/e"
+	"github.com/YeLlowaine/YeLlow/pkg/logging"
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"

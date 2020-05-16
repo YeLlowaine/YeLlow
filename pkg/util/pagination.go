@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"
 
-	"github.com/Hallelujah1025/Stroke-Survivors/pkg/setting"
+	"github.com/YeLlowaine/YeLlow/pkg/setting"
 )
 
 //GetPage 获取分页页码

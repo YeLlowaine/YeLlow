@@ -1,13 +1,13 @@
 package routers
 
 import (
-	"github.com/Hallelujah1025/Stroke-Survivors/middleware/jwt"
-	"github.com/Hallelujah1025/Stroke-Survivors/routers/api"
-	im "github.com/Hallelujah1025/Stroke-Survivors/routers/api/im"
-	v1 "github.com/Hallelujah1025/Stroke-Survivors/routers/api/v1"
+	"github.com/YeLlowaine/YeLlow/middleware/jwt"
+	"github.com/YeLlowaine/YeLlow/routers/api"
+	im "github.com/YeLlowaine/YeLlow/routers/api/im"
+	v1 "github.com/YeLlowaine/YeLlow/routers/api/v1"
 	"github.com/gin-gonic/gin"
 
-	"github.com/Hallelujah1025/Stroke-Survivors/pkg/setting"
+	"github.com/YeLlowaine/YeLlow/pkg/setting"
 )
 
 //InitRouter 初始化路径

@@ -1,3 +1,5 @@
+github.com/YeLlowaine/YeLlow v0.0.0-20200516093555-54fab67bd4da h1:mL+klZ0hoV4x1T4gKad5Q/k8oQptM32igHvXBFQme4I=
+github.com/YeLlowaine/YeLlow v0.0.0-20200516093555-54fab67bd4da/go.mod h1:8MS/vF4N3gy4gtciLQwxYwiuFdFHC2+7xqrG2iyAUEA=
 github.com/Knetic/govaluate v3.0.0+incompatible/go.mod h1:r7JcOSlj0wfOMncg0iLm8Leh48TZaKVeNIfJntJ2wa0=
 github.com/OwnLocal/goes v1.0.0/go.mod h1:8rIFjBGTue3lCU0wplczcUgt9Gxgrkkrw7etMIcn8TM=
 github.com/astaxie/beego v1.12.1 h1:dfpuoxpzLVgclveAXe4PyNKqkzgm5zF4tgF2B3kkM2I=

@@ -6,8 +6,8 @@ import (
 	"time"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/Hallelujah1025/Stroke-Survivors/pkg/setting"
-	"github.com/Hallelujah1025/Stroke-Survivors/pkg/logging"
+	"github.com/YeLlowaine/YeLlow/pkg/setting"
+	"github.com/YeLlowaine/YeLlow/pkg/logging"
 	
 	
 )

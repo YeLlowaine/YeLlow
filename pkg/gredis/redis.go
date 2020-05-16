@@ -1,7 +1,7 @@
 package gredis
 
 import (
-	"github.com/Hallelujah1025/Stroke-Survivors/pkg/setting"
+	"github.com/YeLlowaine/YeLlow/pkg/setting"
 	"github.com/gomodule/redigo/redis"
 )
 

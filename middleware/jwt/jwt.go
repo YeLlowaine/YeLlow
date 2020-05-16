@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/Hallelujah1025/Stroke-Survivors/pkg/e"
-	"github.com/Hallelujah1025/Stroke-Survivors/pkg/util"
+	"github.com/YeLlowaine/YeLlow/pkg/e"
+	"github.com/YeLlowaine/YeLlow/pkg/util"
 )
 
 //JWT ...

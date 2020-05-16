@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Hallelujah1025/Stroke-Survivors/pkg/setting"
-	"github.com/Hallelujah1025/Stroke-Survivors/routers"
+	"github.com/YeLlowaine/YeLlow/pkg/setting"
+	"github.com/YeLlowaine/YeLlow/routers"
 )
 
 func main() {
