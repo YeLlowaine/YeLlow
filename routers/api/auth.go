@@ -17,11 +17,12 @@ import (
 type auth struct {
 	Username         string `valid:"Required; MaxSize(50)"`
 	Password         string `valid:"Required; MaxSize(50)"`
-	UserType         int
 	FacePicture      string
 	Icon             string
 	Address          string
 	SecurityQuestion string
+	Duration         string
+	UserType         int
 }
 
 //GetAuth ...
@@ -72,6 +73,7 @@ func Register(c *gin.Context) {
 	icon := c.Query("icon")
 	address := c.Query("address")
 	security_question := c.Query("security_question")
+	duration := c.Query("duration")
 
 	valid := validation.Validation{}
 	valid.Required(username, "username").Message("名称不能为空")
@@ -83,7 +85,7 @@ func Register(c *gin.Context) {
 	code := e.INVALID_PARAMS
 
 	if !valid.HasErrors() {
-		models.AddAuth(username, password, face_picture, icon, address, security_question, user_type)
+		models.AddAuth(username, password, face_picture, icon, address, security_question, duration, user_type)
 		code = e.SUCCESS
 	} else {
 		for _, err := range valid.Errors {
@@ -225,3 +227,81 @@ func SearchUser(c *gin.Context) {
 // 		"data": data,
 // 	})
 // }
+
+//GetInfo 获取用户信息
+func GetInfo(c *gin.Context) {
+	id := com.StrTo(c.Param("id")).MustInt()
+
+	valid := validation.Validation{}
+
+	var data interface{}
+	code := e.INVALID_PARAMS
+
+	if !valid.HasErrors() {
+		data = models.GetInfo(id)
+		code = e.SUCCESS
+	} else {
+		code = e.ERROR
+		for _, err := range valid.Errors {
+			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  e.GetMsg(code),
+		"data": data,
+	})
+}
+
+//GetInfoFromName 通过用户名取用户信息
+func GetInfoFromName(c *gin.Context) {
+	username := c.Param("username")
+
+	valid := validation.Validation{}
+
+	var data interface{}
+	code := e.INVALID_PARAMS
+
+	if !valid.HasErrors() {
+		data = models.GetInfoFromName(username)
+		code = e.SUCCESS
+	} else {
+		code = e.ERROR
+		for _, err := range valid.Errors {
+			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  e.GetMsg(code),
+		"data": data,
+	})
+}
+
+//GetIcon 通过用户名取用户头像
+func GetIcon(c *gin.Context) {
+	username := c.Param("username")
+
+	valid := validation.Validation{}
+
+	var data interface{}
+	code := e.INVALID_PARAMS
+
+	if !valid.HasErrors() {
+		data = models.GetIcon(username)
+		code = e.SUCCESS
+	} else {
+		code = e.ERROR
+		for _, err := range valid.Errors {
+			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  e.GetMsg(code),
+		"data": data,
+	})
+}

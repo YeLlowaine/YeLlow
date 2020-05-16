@@ -18,7 +18,6 @@ CREATE TABLE `blog_comment` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `article_id` int(10) unsigned DEFAULT '0' COMMENT '文章ID',
   `content` text,
-  `created_on` int(11) DEFAULT NULL,
   `created_at` DateTime  DEFAULT NULL,
   `created_by` varchar(100) DEFAULT '' COMMENT '创建人',
   `state` tinyint(3) unsigned DEFAULT '1' COMMENT '状态 0为禁用1为启用',
@@ -33,7 +32,6 @@ CREATE TABLE `blog_article` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `article_name` varchar(100) DEFAULT '' COMMENT '文章名称',
   `content` text,
-  `created_on` int(10) unsigned DEFAULT '0' COMMENT '创建时间',
   `created_at` DateTime  DEFAULT NULL,
   `created_by` varchar(100) DEFAULT '' COMMENT '作者',
   `deleted_on` int(10) unsigned DEFAULT '0',
@@ -54,6 +52,7 @@ CREATE TABLE `blog_auth` (
   `icon` varchar(500) DEFAULT '' COMMENT '头像',
   `address` varchar(50) DEFAULT '' COMMENT '地区',
   `security_question` varchar(100) DEFAULT '' COMMENT '密保',
+  `duration` varchar(100) DEFAULT '' COMMENT '年限',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

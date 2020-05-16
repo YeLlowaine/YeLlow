@@ -10,6 +10,8 @@ type Auth struct {
 	Icon             string `json:"icon"`
 	Address          string `json:"address"`
 	SecurityQuestion string `json:"security_question"`
+	Duration         string `json:"duration"`
+
 }
 
 //CheckAuth ...
@@ -24,16 +26,17 @@ func CheckAuth(username, password string) bool {
 }
 
 // AddAuth
-func AddAuth(username, password, face_picture, icon, address, security_question string, user_type int) bool {
+func AddAuth(username, password, face_picture, icon, address, security_question, duration string, user_type int) bool {
 	// var auth Auth
 	db.Create(&Auth{
 		Username:         username,
 		Password:         password,
-		UserType:         user_type,
 		FacePicture:      face_picture,
 		Icon:             icon,
 		Address:          address,
 		SecurityQuestion: security_question,
+		Duration:         duration,
+		UserType:         user_type,
 	})
 
 	return true
@@ -65,6 +68,26 @@ func GetUser(user_id int) (auth []Auth) {
 
 func SearchUser(keyword string) (auth []Auth) {
 	db.Where("username LIKE ? AND user_type = 1", keyword).Find(&auth)
+
+	return
+}
+// GetInfo ...
+func GetInfo(id int) (auth Auth) {
+	db.Where("id = ?", id).First(&auth)
+
+	return
+}
+
+// GetInfoFromName ...
+func GetInfoFromName(username string) (auth Auth) {
+	db.Where("username = ?", username).First(&auth)
+
+	return
+}
+
+// GetIcon ...
+func GetIcon(username string) (auth Auth) {
+	db.Select("icon").Where("username = ?", username).First(&auth)
 
 	return
 }
