@@ -91,3 +91,9 @@ func GetIcon(username string) (auth Auth) {
 
 	return
 }
+
+func GetAll() (auth []Auth){
+	db.Select("*").Where("user_type = 1").Find(&auth)
+
+	return
+}

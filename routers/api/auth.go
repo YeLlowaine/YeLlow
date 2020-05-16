@@ -305,3 +305,20 @@ func GetIcon(c *gin.Context) {
 		"data": data,
 	})
 }
+
+func GetAllDoctor(c *gin.Context) {
+
+	data := make(map[string]interface{})
+	ret := models.GetAll()
+	code := e.SUCCESS
+	for index, val := range ret {
+		str := fmt.Sprintf("%d", index)
+		data[str] = val
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  e.GetMsg(code),
+		"data": data,
+	})
+}

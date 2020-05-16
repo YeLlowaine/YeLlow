@@ -45,6 +45,7 @@ func InitRouter() *gin.Engine {
 	// 通过用户名获取头像
 	r.GET("/getIcon/:username", api.GetIcon)
 
+	r.GET("/getdoctor", api.GetAllDoctor)
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(jwt.JWT())
 	{
