@@ -92,6 +92,12 @@ func GetIcon(username string) (auth Auth) {
 	return
 }
 
+func GetFaceToken(username string) (auth Auth) {
+	db.Select("face_picture").Where("username = ?", username).First(&auth)
+
+	return
+}
+
 func GetAll() (auth []Auth){
 	db.Select("*").Where("user_type = 1").Find(&auth)
 

@@ -306,6 +306,32 @@ func GetIcon(c *gin.Context) {
 	})
 }
 
+//GetFaceToken 获取人脸照
+func GetFaceToken(c *gin.Context) {
+	username := c.Param("username")
+
+	valid := validation.Validation{}
+
+	var data interface{}
+	code := e.INVALID_PARAMS
+
+	if !valid.HasErrors() {
+		data = models.GetFaceToken(username)
+		code = e.SUCCESS
+	} else {
+		code = e.ERROR
+		for _, err := range valid.Errors {
+			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  e.GetMsg(code),
+		"data": data,
+	})
+}
+
 func GetAllDoctor(c *gin.Context) {
 
 	data := make(map[string]interface{})

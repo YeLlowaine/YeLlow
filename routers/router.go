@@ -44,6 +44,8 @@ func InitRouter() *gin.Engine {
 	r.GET("/getInfoFromName/:username", api.GetInfoFromName)
 	// 通过用户名获取头像
 	r.GET("/getIcon/:username", api.GetIcon)
+	//获取人脸照
+	r.GET("/getFaceToken/:username", api.GetFaceToken)
 
 	r.GET("/getdoctor", api.GetAllDoctor)
 	apiv1 := r.Group("/api/v1")

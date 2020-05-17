@@ -19,6 +19,7 @@ CREATE TABLE `blog_comment` (
   `article_id` int(10) unsigned DEFAULT '0' COMMENT '文章ID',
   `content` text,
   `created_at` DateTime  DEFAULT NULL,
+  `created_on` int(10) unsigned DEFAULT '0',
   `created_by` varchar(100) DEFAULT '' COMMENT '创建人',
   `state` tinyint(3) unsigned DEFAULT '1' COMMENT '状态 0为禁用1为启用',
   PRIMARY KEY (`id`)
@@ -32,6 +33,7 @@ CREATE TABLE `blog_article` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `article_name` varchar(100) DEFAULT '' COMMENT '文章名称',
   `content` text,
+  `created_on` int(10) unsigned DEFAULT '0',
   `created_at` DateTime  DEFAULT NULL,
   `created_by` varchar(100) DEFAULT '' COMMENT '作者',
   `deleted_on` int(10) unsigned DEFAULT '0',
