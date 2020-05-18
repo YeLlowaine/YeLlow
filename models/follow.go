@@ -2,15 +2,15 @@ package models
 
 //Favorite ...
 type Follow struct {
-	ID        int `gorm:"primary_key" json:"id"`
-	DoctorId  int `json:"doctor_id"`
-	PatientId int `json:"patient_id"`
+	ID          int    `gorm:"primary_key" json:"id"`
+	DoctorName  string `json:"doctor_id"`
+	PatientName string `json:"patient_id"`
 }
 
 //ExistCommentByID ...
-func ExistFollowByID(doctor_id, patient_id int) int {
+func ExistFollowByID(doctor_name, patient_name string) int {
 	var follow Follow
-	db.Select("id").Where("doctor_id = ? AND patient_id = ?", doctor_id, patient_id).Find(&follow)
+	db.Select("id").Where("doctor_name = ? AND patient_name = ?", doctor_name, patient_name).Find(&follow)
 	if follow.ID > 0 {
 		return follow.ID
 	}
@@ -19,23 +19,23 @@ func ExistFollowByID(doctor_id, patient_id int) int {
 }
 
 //GetArticleID ...
-func GetDoctorID(patient_id int) (follow []Follow) {
-	db.Where("patient_id = ?", patient_id).Find(&follow)
+func GetDoctorID(patient_name string) (follow []Follow) {
+	db.Where("patient_name = ?", patient_name).Find(&follow)
 
-	return 
+	return
 }
 
-func GetPatientID(doctor_id int) (follow []Follow) {
-	db.Where("doctor_id = ?", doctor_id).Find(&follow)
+func GetPatientID(doctor_name string) (follow []Follow) {
+	db.Where("doctor_name = ?", doctor_name).Find(&follow)
 
 	return
 }
 
 //AddComment ...
-func AddFollow(data map[string]int) bool {
+func AddFollow(data map[string]string) bool {
 	db.Create(&Follow{
-		DoctorId:  data["doctor_id"],
-		PatientId: data["patient_id"],
+		DoctorName:  data["doctor_name"],
+		PatientName: data["patient_name"],
 	})
 
 	return true

@@ -9,26 +9,25 @@ import (
 	"github.com/YeLlowaine/YeLlow/pkg/logging"
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
-	"github.com/unknwon/com"
 )
 
 //GetFavoriteArtic
 
 // AddFavorite
 func AddFollow(c *gin.Context) {
-	doctor_id := c.Query("doctor_id")
-	patient_id := c.Query("patient_id")
+	doctor_name := c.Query("doctor_name")
+	patient_name := c.Query("patient_name")
 	valid := validation.Validation{}
 
-	valid.Required(doctor_id, "doctor_id").Message("医生不能为空")
-	valid.Required(patient_id, "patient_id").Message("病人不能为空")
+	valid.Required(doctor_name, "doctor_name").Message("医生不能为空")
+	valid.Required(patient_name, "patient_name").Message("病人不能为空")
 
-	maps := make(map[string]int)
-	maps["doctor_id"] = com.StrTo(doctor_id).MustInt()
-	maps["patient_id"] = com.StrTo(patient_id).MustInt()
+	maps := make(map[string]string)
+	maps["doctor_name"] = doctor_name
+	maps["patient_name"] = patient_name
 	code := e.INVALID_PARAMS
 	if !valid.HasErrors() {
-		if ret := models.ExistFollowByID(com.StrTo(doctor_id).MustInt(), com.StrTo(patient_id).MustInt()); ret == -1 {
+		if ret := models.ExistFollowByID(doctor_name, patient_name); ret == -1 {
 			code = e.SUCCESS
 			models.AddFollow(maps)
 		} else {
@@ -49,18 +48,16 @@ func AddFollow(c *gin.Context) {
 
 //DeleteFavorite
 func DeleteFollow(c *gin.Context) {
-	doctor_id := com.StrTo(c.Query("doctor_id")).MustInt()
-	patient_id := com.StrTo(c.Query("patient_id")).MustInt()
+	doctor_name := c.Query("doctor_name")
+	patient_name := c.Query("patient_name")
 
 	valid := validation.Validation{}
-	valid.Min(doctor_id, 1, "id").Message("医生ID必须大于0")
-	valid.Min(patient_id, 1, "id").Message("病人ID必须大于0")
 
 	code := e.INVALID_PARAMS
 	if !valid.HasErrors() {
 		code = e.SUCCESS
 
-		if id := models.ExistFollowByID(doctor_id, patient_id); id >= 0 {
+		if id := models.ExistFollowByID(doctor_name, patient_name); id >= 0 {
 			logging.Info("id: %s=", id)
 			models.DeleteFollow(id)
 		} else {
@@ -83,17 +80,17 @@ func DeleteFollow(c *gin.Context) {
 
 //
 func GetDoctor(c *gin.Context) {
-	patient_id := com.StrTo(c.Query("patient_id")).MustInt()
+	patient_name := c.Query("patient_name")
 	data := make(map[string]interface{})
 	valid := validation.Validation{}
-	valid.Min(patient_id, 1, "id").Message("病人ID必须大于0")
+
 	code := e.INVALID_PARAMS
 	if !valid.HasErrors() {
 		code = e.SUCCESS
-		ret := models.GetDoctorID(patient_id)
+		ret := models.GetDoctorID(patient_name)
 		for index, val := range ret {
 			str := fmt.Sprintf("%d", index)
-			data[str] = models.GetUser(val.DoctorId)
+			data[str] = models.GetUser(val.DoctorName)
 		}
 
 	} else {
@@ -111,17 +108,17 @@ func GetDoctor(c *gin.Context) {
 
 //
 func GetPatient(c *gin.Context) {
-	doctor_id := com.StrTo(c.Query("doctor_id")).MustInt()
+	doctor_name := c.Query("doctor_name")
 	data := make(map[string]interface{})
 	valid := validation.Validation{}
-	valid.Min(doctor_id, 1, "id").Message("病人ID必须大于0")
+
 	code := e.INVALID_PARAMS
 	if !valid.HasErrors() {
 		code = e.SUCCESS
-		ret := models.GetPatientID(doctor_id)
+		ret := models.GetPatientID(doctor_name)
 		for index, val := range ret {
 			str := fmt.Sprintf("%d", index)
-			data[str] = models.GetUser(val.PatientId)
+			data[str] = models.GetUser(val.PatientName)
 		}
 
 	} else {

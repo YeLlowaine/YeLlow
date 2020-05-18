@@ -37,6 +37,12 @@ func GetArticle(id int) (article Article) {
 	return
 }
 
+func GetArticleByname(name string) (article Article) {
+	db.Where("article_name = ?", name).First(&article)
+
+	return
+}
+
 //GetArticleTotal ...
 func GetArticleTotal(maps interface{}) (count int) {
 	db.Model(&Article{}).Where(maps).Count(&count)

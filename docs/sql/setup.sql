@@ -66,8 +66,8 @@ CREATE TABLE `blog_auth` (
 DROP TABLE IF EXISTS `blog_favorite`;
 CREATE TABLE `blog_favorite` (
   `id` int(100) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(100) DEFAULT '0' COMMENT '医生id',
-  `article_id` int(100) DEFAULT '0' COMMENT '病人id',
+  `user_name` varchar(100) DEFAULT '0' COMMENT '医生id',
+  `article_name` varchar(100) DEFAULT '0' COMMENT '病人id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -77,7 +77,7 @@ CREATE TABLE `blog_favorite` (
 DROP TABLE IF EXISTS `blog_follow`;
 CREATE TABLE `blog_follow` (
   `id` int(100) unsigned NOT NULL AUTO_INCREMENT,
-  `doctor_id` int(100) DEFAULT '0' COMMENT '医生id',
-  `patient_id` int(100) DEFAULT '0' COMMENT '病人id',
+  `doctor_name` varchar(100) DEFAULT '0' COMMENT '医生id',
+  `patient_name` varchar(100) DEFAULT '0' COMMENT '病人id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

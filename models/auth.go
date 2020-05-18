@@ -11,13 +11,22 @@ type Auth struct {
 	Address          string `json:"address"`
 	SecurityQuestion string `json:"security_question"`
 	Duration         string `json:"duration"`
-
 }
 
 //CheckAuth ...
 func CheckAuth(username, password string) bool {
 	var auth Auth
 	db.Select("id").Where(Auth{Username: username, Password: password}).First(&auth)
+	if auth.ID > 0 {
+		return true
+	}
+
+	return false
+}
+
+func CheckQuestion(username, question string) bool {
+	var auth Auth
+	db.Select("id").Where(Auth{Username: username, SecurityQuestion: question}).First(&auth)
 	if auth.ID > 0 {
 		return true
 	}
@@ -60,8 +69,8 @@ func UpdateAuth(username string, data interface{}) bool {
 	return true
 }
 
-func GetUser(user_id int) (auth []Auth) {
-	db.Where("id = ?", user_id).Find(&auth)
+func GetUser(username string) (auth []Auth) {
+	db.Where("username = ?", username).Find(&auth)
 
 	return
 }
@@ -71,6 +80,7 @@ func SearchUser(keyword string) (auth []Auth) {
 
 	return
 }
+
 // GetInfo ...
 func GetInfo(id int) (auth Auth) {
 	db.Where("id = ?", id).First(&auth)
@@ -98,7 +108,7 @@ func GetFaceToken(username string) (auth Auth) {
 	return
 }
 
-func GetAll() (auth []Auth){
+func GetAll() (auth []Auth) {
 	db.Select("*").Where("user_type = 1").Find(&auth)
 
 	return

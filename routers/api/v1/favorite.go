@@ -9,24 +9,23 @@ import (
 	"github.com/YeLlowaine/YeLlow/pkg/logging"
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
-	"github.com/unknwon/com"
 )
 
 //GetFavoriteArticle 获取收藏文章
 func GetFavoriteArticle(c *gin.Context) {
-	user_id := com.StrTo(c.Query("user_id")).MustInt()
+	user_name := c.Query("user_name")
 
 	data := make(map[string]interface{})
 	valid := validation.Validation{}
-	valid.Min(user_id, 1, "id").Message("用户ID必须大于0")
+
 	code := e.INVALID_PARAMS
 
 	if !valid.HasErrors() {
 		code = e.SUCCESS
-		ret := models.GetArticleID(user_id)
+		ret := models.GetArticleID(user_name)
 		for index, val := range ret {
 			str := fmt.Sprintf("%d", index)
-			data[str] = models.GetArticle(val.ArticleId)
+			data[str] = models.GetArticleByname(val.ArticleName)
 		}
 
 	} else {
@@ -44,19 +43,16 @@ func GetFavoriteArticle(c *gin.Context) {
 
 // AddFavorite
 func AddFavorite(c *gin.Context) {
-	user_id := c.Query("user_id")
-	article_id := c.Query("article_id")
+	user_name := c.Query("user_name")
+	article_name := c.Query("article_name")
 	valid := validation.Validation{}
 
-	valid.Required(user_id, "user_id").Message("用户不能为空")
-	valid.Required(article_id, "article_id").Message("帖子不能为空")
-
-	maps := make(map[string]int)
-	maps["user_id"] = com.StrTo(user_id).MustInt()
-	maps["article_id"] = com.StrTo(article_id).MustInt()
+	maps := make(map[string]string)
+	maps["user_name"] = user_name
+	maps["article_name"] = article_name
 	code := e.INVALID_PARAMS
 	if !valid.HasErrors() {
-		if ret := models.ExistRelationByID(com.StrTo(user_id).MustInt(), com.StrTo(article_id).MustInt()); ret == -1 {
+		if ret := models.ExistRelationByID(user_name, article_name); ret == -1 {
 			code = e.SUCCESS
 			models.AddFavorite(maps)
 		} else {
@@ -77,18 +73,16 @@ func AddFavorite(c *gin.Context) {
 
 //DeleteFavorite 删除收藏
 func DeleteFavorite(c *gin.Context) {
-	user_id := com.StrTo(c.Query("user_id")).MustInt()
-	article_id := com.StrTo(c.Query("article_id")).MustInt()
+	user_name := c.Query("user_name")
+	article_name := c.Query("article_name")
 
 	valid := validation.Validation{}
-	valid.Min(user_id, 1, "id").Message("用户ID必须大于0")
-	valid.Min(article_id, 1, "id").Message("帖子ID必须大于0")
 
 	code := e.INVALID_PARAMS
 	if !valid.HasErrors() {
 		code = e.SUCCESS
 
-		if id := models.ExistRelationByID(user_id, article_id); id >= 0 {
+		if id := models.ExistRelationByID(user_name, article_name); id >= 0 {
 			logging.Info("id: %s=", id)
 			models.DeleteFavorite(id)
 		} else {

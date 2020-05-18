@@ -25,6 +25,8 @@ func InitRouter() *gin.Engine {
 	r.GET("/register", api.Register)
 	//登陆
 	r.GET("/auth", api.GetAuth)
+	r.GET("/authF", api.GetAuthF)
+	r.GET("/authQ", api.GetAuthQ)
 
 	//send message
 

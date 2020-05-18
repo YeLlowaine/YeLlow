@@ -64,6 +64,57 @@ func GetAuth(c *gin.Context) {
 	})
 }
 
+func GetAuthF(c *gin.Context) {
+	username := c.Query("username")
+
+	data := make(map[string]interface{})
+	code := e.ERROR_AUTH
+
+	token, err := util.GenerateToken(username, "1234")
+	if err != nil {
+		code = e.ERROR_AUTH_TOKEN
+	} else {
+		data["token"] = token
+
+		code = e.SUCCESS
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  e.GetMsg(code),
+		"data": data,
+	})
+}
+
+func GetAuthQ(c *gin.Context) {
+	username := c.Query("username")
+	SecurityQuestion := c.Query("security_question")
+
+	data := make(map[string]interface{})
+	code := e.INVALID_PARAMS
+
+	isExist := models.CheckQuestion(username, SecurityQuestion)
+	if isExist {
+		token, err := util.GenerateToken(username, SecurityQuestion)
+		if err != nil {
+			code = e.ERROR_AUTH_TOKEN
+		} else {
+			data["token"] = token
+
+			code = e.SUCCESS
+		}
+
+	} else {
+		code = e.ERROR_AUTH
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  e.GetMsg(code),
+		"data": data,
+	})
+}
+
 //GetRegister
 func Register(c *gin.Context) {
 	username := c.Query("username")
