@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/YeLlowaine/YeLlow/models"
@@ -23,11 +22,11 @@ func GetFavoriteArticle(c *gin.Context) {
 	if !valid.HasErrors() {
 		code = e.SUCCESS
 		ret := models.GetArticleID(user_name)
+		list := make([]models.Article, 10, 10)
 		for index, val := range ret {
-			str := fmt.Sprintf("%d", index)
-			data[str] = models.GetArticleByname(val.ArticleName)
+			list[index] = models.GetArticleByname(val.ArticleName)
 		}
-
+		data["list"] = list
 	} else {
 		for _, err := range valid.Errors {
 			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)

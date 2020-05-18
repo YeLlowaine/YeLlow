@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/YeLlowaine/YeLlow/models"
@@ -87,12 +86,12 @@ func GetDoctor(c *gin.Context) {
 	code := e.INVALID_PARAMS
 	if !valid.HasErrors() {
 		code = e.SUCCESS
+		list := make([]models.Auth, 10, 10)
 		ret := models.GetDoctorID(patient_name)
 		for index, val := range ret {
-			str := fmt.Sprintf("%d", index)
-			data[str] = models.GetUser(val.DoctorName)
+			list[index] = models.GetUser(val.DoctorName)
 		}
-
+		data["list"] = list
 	} else {
 		for _, err := range valid.Errors {
 			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
@@ -116,11 +115,11 @@ func GetPatient(c *gin.Context) {
 	if !valid.HasErrors() {
 		code = e.SUCCESS
 		ret := models.GetPatientID(doctor_name)
+		list := make([]models.Auth, 10, 10)
 		for index, val := range ret {
-			str := fmt.Sprintf("%d", index)
-			data[str] = models.GetUser(val.PatientName)
+			list[index] = models.GetUser(val.PatientName)
 		}
-
+		data["list"] = list
 	} else {
 		for _, err := range valid.Errors {
 			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)

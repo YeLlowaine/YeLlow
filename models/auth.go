@@ -69,7 +69,7 @@ func UpdateAuth(username string, data interface{}) bool {
 	return true
 }
 
-func GetUser(username string) (auth []Auth) {
+func GetUser(username string) (auth Auth) {
 	db.Where("username = ?", username).Find(&auth)
 
 	return
